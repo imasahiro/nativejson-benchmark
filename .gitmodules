@@ -55,3 +55,6 @@
 [submodule "thirdparty/simplejson"]
 	path = thirdparty/simplejson
 	url = https://github.com/MJPA/SimpleJSON.git
+[submodule "thirdparty/kjson"]
+	path = thirdparty/kjson
+	url = https://github.com/imasahiro/kjson.git
