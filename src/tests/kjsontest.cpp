@@ -1,4 +1,5 @@
 #include "../test.h"
+#define KJSON_HEADER_ONLY 1
 #include "../../thirdparty/kjson/kjson/kjson.c"
 
 static void GenStat(Stat* s, const JSON v) {
@@ -76,10 +77,10 @@ public:
     char *str;
 };
 
-class Dropboxjson11Test : public TestBase {
+class KJsonTest : public TestBase {
 public:
 #if TEST_INFO
-    virtual const char* GetName() const { return "dropbox/json11 (C++11)"; }
+    virtual const char* GetName() const { return "kjson"; }
     virtual const char* GetFilename() const { return __FILE__; }
 #endif
 
@@ -112,4 +113,4 @@ public:
 #endif
 };
 
-REGISTER_TEST(Dropboxjson11Test);
+REGISTER_TEST(KJsonTest);
