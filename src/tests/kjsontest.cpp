@@ -52,6 +52,8 @@ static void GenStat(Stat* s, const JSON v) {
     case JSON_Int64:
         s->numberCount++;
         break;
+    default:
+        break;
     }
 }
 
@@ -85,8 +87,7 @@ public:
     virtual ParseResultBase* Parse(const char* json, size_t length) const {
         (void)length;
         KJsonParseResult* pr = new KJsonParseResult;
-        std::string err;
-        pr->root = parseJSON(json);
+        pr->root = parseJSON(&pr->jm, json, json + length);
     	return pr;
     }
 #endif
@@ -95,7 +96,8 @@ public:
     virtual StringResultBase* Stringify(const ParseResultBase* parseResult) const {
         const KJsonParseResult* pr = static_cast<const KJsonParseResult*>(parseResult);
         KjsonStringResult* sr = new KjsonStringResult;
-        sr->str = JSON_toStringWithLength(pr->root);
+        size_t len;
+        sr->str = JSON_toStringWithLength(pr->root, &len);
         return sr;
     }
 #endif
@@ -104,11 +106,10 @@ public:
     virtual bool Statistics(const ParseResultBase* parseResult, Stat* stat) const {
         const KJsonParseResult* pr = static_cast<const KJsonParseResult*>(parseResult);
         memset(stat, 0, sizeof(Stat));
-        GenStat(*stat, pr->root);
+        GenStat(stat, pr->root);
         return true;
     }
 #endif
 };
 
 REGISTER_TEST(Dropboxjson11Test);
-#endif
